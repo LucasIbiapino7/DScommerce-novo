@@ -29,7 +29,21 @@ public class ProductService {
         return products.map(x -> new ProductDTO(x));
     }
 
-    
+    @Transactional
+    public ProductDTO insert(ProductDTO dto){
+        //transformamos o dto em uma entidade gerenciada pela jpa
+        Product entity = new Product();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+        //depois inserimos a entidade no banco e "pegamos" ela de volta com o id correspondente
+        entity = repository.save(entity);
+        //transformamos em dto novamente e retornamos
+        return new ProductDTO(entity);
+    }
+
+
 
 
 }
