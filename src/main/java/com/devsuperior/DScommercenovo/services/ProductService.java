@@ -5,6 +5,7 @@ import com.devsuperior.DScommercenovo.dto.ProductDTO;
 import com.devsuperior.DScommercenovo.dto.ProductMinDTO;
 import com.devsuperior.DScommercenovo.entities.Category;
 import com.devsuperior.DScommercenovo.entities.Product;
+
 import com.devsuperior.DScommercenovo.repositories.ProductRepository;
 import com.devsuperior.DScommercenovo.services.exceptions.DatabaseException;
 import com.devsuperior.DScommercenovo.services.exceptions.ResourceNotFoundException;
