@@ -8,15 +8,16 @@ public class OrderItemDTO {
     private String name;
     private Double price;
     private Integer quantity;
+    private String imgUrl;
 
     //OBSERVAÇÃO: SUBTOTAL É UM CAMPO CALCULADO! NÃO ADICIONAMOS ELE COMO ATRIBUTO, E SIM COMO MÉTODO.
 
-
-    public OrderItemDTO(Long productId, String name, Double price, Integer quantity) {
+    public OrderItemDTO(Long productId, String name, Double price, Integer quantity, String imgUrl) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.imgUrl = imgUrl;
     }
 
     public OrderItemDTO(OrderItem entity) {
@@ -24,6 +25,7 @@ public class OrderItemDTO {
         name = entity.getProduct().getName();
         price = entity.getPrice();
         quantity = entity.getQuantity();
+        imgUrl = entity.getProduct().getImgUrl();
     }
 
     public Long getProductId() {
@@ -45,5 +47,9 @@ public class OrderItemDTO {
     //O nome do método precisa ter o get e ser igual ao json
     public Double getSubTotal(){
         return price * quantity;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 }
