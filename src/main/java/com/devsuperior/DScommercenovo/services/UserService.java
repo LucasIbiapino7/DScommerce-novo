@@ -1,16 +1,22 @@
 package com.devsuperior.DScommercenovo.services;
 
+import com.devsuperior.DScommercenovo.dto.UserDTO;
 import com.devsuperior.DScommercenovo.entities.Role;
 import com.devsuperior.DScommercenovo.entities.User;
 import com.devsuperior.DScommercenovo.projections.UserDetailsProjection;
 import com.devsuperior.DScommercenovo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -24,14 +30,32 @@ public class UserService implements UserDetailsService {
         if (result.isEmpty()){
             throw new UsernameNotFoundException("User not found");
         }
-
         User user = new User();
         user.setEmail(username);
         user.setPassword(result.get(0).getPassword());
         for (UserDetailsProjection projection : result){
             user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
         }
-
         return user;
     }
+
+    protected User authenticated(){
+        try {
+            //Captura o nome o Username do usuário no contexto da Jwt
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+            return repository.findByEmail(username).get();
+        }
+        catch (Exception e){
+            throw new UsernameNotFoundException("User not found");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getMe(){
+        User user = authenticated();
+        return new UserDTO(user);
+    }
+
 }
