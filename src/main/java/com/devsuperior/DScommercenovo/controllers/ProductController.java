@@ -1,6 +1,7 @@
 package com.devsuperior.DScommercenovo.controllers;
 
 import com.devsuperior.DScommercenovo.dto.ProductDTO;
+import com.devsuperior.DScommercenovo.dto.ProductMinDTO;
 import com.devsuperior.DScommercenovo.entities.Product;
 import com.devsuperior.DScommercenovo.repositories.ProductRepository;
 import com.devsuperior.DScommercenovo.services.ProductService;
@@ -33,10 +34,10 @@ public class ProductController {
 
     //busca paginada - atores (Usuário anônimo, Cliente, Admin)
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(
+    public ResponseEntity<Page<ProductMinDTO>> findAll(
             @RequestParam(name = "name", defaultValue = "") String name,
             Pageable pageable){
-        Page<ProductDTO> dto = service.findAll(name, pageable);
+        Page<ProductMinDTO> dto = service.findAll(name, pageable);
         return ResponseEntity.ok(dto);
     }
 

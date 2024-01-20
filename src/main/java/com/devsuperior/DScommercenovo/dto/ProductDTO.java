@@ -1,10 +1,15 @@
 package com.devsuperior.DScommercenovo.dto;
 
+import com.devsuperior.DScommercenovo.entities.Category;
 import com.devsuperior.DScommercenovo.entities.Product;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDTO {
 
@@ -21,6 +26,9 @@ public class ProductDTO {
     private Double price;
     private String imgUrl;
 
+    @NotEmpty(message = "precisa de pelo menos uma categoria")
+    private List<CategoryDTO> categories = new ArrayList<>();
+
     public ProductDTO() {
     }
 
@@ -30,6 +38,9 @@ public class ProductDTO {
         description = entity.getDescription();
         price = entity.getPrice();
         imgUrl = entity.getImgUrl();
+        for (Category category : entity.getCategories()){
+            categories.add(new CategoryDTO(category));
+        }
     }
 
     public ProductDTO(Long id, String name, String description, Double price, String imgUrl) {
@@ -58,5 +69,9 @@ public class ProductDTO {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public List<CategoryDTO> getCategories() {
+        return categories;
     }
 }
