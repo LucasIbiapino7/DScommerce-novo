@@ -3,6 +3,7 @@ package com.devsuperior.DScommercenovo.controllers.handlers;
 import com.devsuperior.DScommercenovo.dto.CustomError;
 import com.devsuperior.DScommercenovo.dto.ValidationError;
 import com.devsuperior.DScommercenovo.services.exceptions.DatabaseException;
+import com.devsuperior.DScommercenovo.services.exceptions.ForbiddenException;
 import com.devsuperior.DScommercenovo.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomError> Database(DatabaseException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
