@@ -2,7 +2,7 @@
 
 # Sobre o projeto
 
-Projeto que Visa simular um pequeno comércio e algumas de suas funcionalidades, seguindo boas práticas, tratando exceções, implmentando a segurança no projeto e mais algumas Features
+Projeto que Visa simular um pequeno comércio e algumas de suas funcionalidades, seguindo boas práticas, tratando exceções, implementando a segurança no projeto e mais algumas Features
 
 ## Modelo conceitual
 ![Modelo Conceitual](https://github.com/LucasIbiapino7/assets/blob/main/imgs/DSCommerce.png)
@@ -89,7 +89,7 @@ Pré-requisitos: Java 11
 
 ```bash
 # clonar repositório
-git clone git@github.com:LucasIbiapino7/Agregador-de-Investimentos.git
+git@github.com:LucasIbiapino7/DScommerce-novo.git
 ```
 # Autor
 
